@@ -3,9 +3,6 @@ const fs = require('fs')
 const app = express()
 app.use(express.json())
 
-
-
-
 app.get('/app/:email', (req, res) => {
     
     res.send(JSON.parse(fs.readFileSync(req.params.email+'.json')))

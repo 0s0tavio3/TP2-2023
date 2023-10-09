@@ -3,13 +3,23 @@ const mongoose = require('mongoose')
 const app = express()
 app.use(express.json())
 
+const dotenv = require('dotenv')
+
+if (process.env.PD === 'DEV') {
+dotenv.config({path: '.env.dev'})
+}
+if (process.env.PD === 'PROD') {
+  dotenv.config({path: '.env.prod'})
+}
+
+
 const modelodeUsuario = mongoose.model('contas', new mongoose.Schema({
     email: String,
     password: String,
 }))
 
 
-mongoose.connect('mongodb://localhost:27017/mydatabase')
+mongoose.connect(process.env.URLDB)
   .then(()=>{
 
     app.post('/pegar-dados', async (req,res)=>{
